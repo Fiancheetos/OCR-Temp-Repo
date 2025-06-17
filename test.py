@@ -4,18 +4,8 @@ from pydantic import BaseModel
 from typing import List, Optional
 import uvicorn
 
-from pdf2image import convert_from_path, convert_from_bytes
-from pdf2image.exceptions import (
-    PDFInfoNotInstalledError,
-    PDFPageCountError,
-    PDFSyntaxError
-)
-import pytesseract
-
-
-pytesseract.pytesseract.tesseract_cmd = r'/opt/homebrew/bin/tesseract'
-
-
+from pdf2image import convert_from_path
+import reader
 
 # Initialize the FastAPI application
 app = FastAPI(
@@ -52,15 +42,9 @@ def convert_to_png():
     images = convert_from_path('/Users/fianchetto/Downloads/TORSample.pdf', output_folder='/Users/fianchetto/Desktop/Internship', fmt='png')
     return images
 
-# --- OpenCV Preprocessing ---
-
-
-
-# --- Tesseract OCR ---
-
 def process_img(images):
     for image in images:
-        print(pytesseract.image_to_string(image))
+        reader.reader(image)
         print("\n\n")
 
 # --- API Endpoints (Routes) ---
