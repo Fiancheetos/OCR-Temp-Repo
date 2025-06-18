@@ -5,7 +5,7 @@ from typing import List, Optional
 import uvicorn
 
 from pdf2image import convert_from_path
-import reader
+import torReader
 
 # Initialize the FastAPI application
 app = FastAPI(
@@ -42,18 +42,20 @@ def convert_to_png():
     images = convert_from_path('/Users/fianchetto/Downloads/TORSample.pdf', output_folder='/Users/fianchetto/Desktop/Internship', fmt='png')
     return images
 
-def process_img(images):
+def process_img(images, records_table):
     for image in images:
-        reader.reader(image)
-        print("\n\n")
+        records_table = torReader.process(image, records_table)
+
+    return records_table
 
 # --- API Endpoints (Routes) ---
 
 @app.get("/api/")
 async def run_func():
     images = convert_to_png()
-    process_img(images)
-    return {"message": "Sample Message"}
+    records_table = dict()
+    process_img(images, records_table)
+    return records_table
 
 # --- Run the application ---
 # This block allows you to run the FastAPI application directly using `python main.py`.

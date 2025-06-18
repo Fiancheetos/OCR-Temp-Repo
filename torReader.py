@@ -4,8 +4,8 @@ from pdf2image import convert_from_path
 import parser
 import numpy
 
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-def process(pil_image):
+pytesseract.pytesseract.tesseract_cmd = r'/opt/homebrew/bin/tesseract'
+def process(pil_image, records_table):
     image = cv2.cvtColor(numpy.array(pil_image), cv2.COLOR_RGB2BGR)
 
     cCodeCol = [(155, 500), (330, 2035)]
@@ -38,11 +38,10 @@ def process(pil_image):
     header = ["Course Code", "Course Name", "Grade", "Credits"]
     print(f"{header[0]:<12} | {header[1]:<80} | {header[2]:<5} | {header[3]:<4}")
     for course_code, course_name, grade, credit in zip(data[0], data[1], data[2], data[4]):
-        print(f"{course_code:<12} | {course_name:<80} | {grade:<5} | {credit:<4}")
+        # print(f"{course_code:<12} | {course_name:<80} | {grade:<5} | {credit:<4}")
+        records_table[course_code] = [course_name, grade, credit]
 
+    return records_table
+        
 
-images = convert_from_path('./TOR_Sample.pdf', fmt='png')
-
-for image in images:
-    process(image)
 
