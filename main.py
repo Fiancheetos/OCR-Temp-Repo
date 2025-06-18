@@ -44,7 +44,7 @@ def convert_to_png():
 
 def process_img(images, records_table):
     for image in images:
-        records_table = torReader.process(image, records_table)
+        records_table = TORReader.process(image, records_table)
 
     return records_table
 
