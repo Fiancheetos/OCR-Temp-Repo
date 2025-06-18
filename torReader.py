@@ -4,7 +4,7 @@ import numpy
 import dataCleaner
 import os
 from dotenv import load_dotenv
-from pdf2image import convert_from_path
+# from pdf2image import convert_from_path
 
 load_dotenv()
 
