@@ -1,6 +1,5 @@
 # Import necessary modules from FastAPI
 from fastapi import FastAPI, Request
-from typing import List, Optional
 import uvicorn
 
 from pdf2image import convert_from_path
@@ -8,8 +7,8 @@ import torReader
 
 # Initialize the FastAPI application
 app = FastAPI(
-    title="Basic FastAPI Boilerplate",
-    description="A simple starting point for your FastAPI projects.",
+    title="Transcript OCR",
+    description="",
     version="0.1.0"
 )
 
@@ -18,8 +17,6 @@ app = FastAPI(
 async def receive_blob(file):
     with open("tor.pdf", "wb") as fp:
         fp.write(file)
-
-
 
 async def convert_to_png():
     images = convert_from_path("tor.pdf", fmt='png')

@@ -33,10 +33,10 @@ def process(pil_image, records_table):
 
     parser.match(data)
 
-    print("")
-    print("Extracted Transcript: ")
-    header = ["Course Code", "Course Name", "Grade", "Credits"]
-    print(f"{header[0]:<12} | {header[1]:<80} | {header[2]:<5} | {header[3]:<4}")
+    # print("")
+    # print("Extracted Transcript: ")
+    # header = ["Course Code", "Course Name", "Grade", "Credits"]
+    # print(f"{header[0]:<12} | {header[1]:<80} | {header[2]:<5} | {header[3]:<4}")
     for course_code, course_name, grade, credit in zip(data[0], data[1], data[2], data[4]):
         # print(f"{course_code:<12} | {course_name:<80} | {grade:<5} | {credit:<4}")
         records_table[course_code] = [course_name, grade, credit]
