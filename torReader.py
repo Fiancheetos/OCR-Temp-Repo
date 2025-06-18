@@ -4,6 +4,7 @@ import numpy
 import dataCleaner
 import os
 from dotenv import load_dotenv
+from pdf2image import convert_from_path
 
 load_dotenv()
 
@@ -70,9 +71,20 @@ def process(pil_image, cols, records_table):
     # header = ["Course Code", "Course Name", "Grade", "Credits"]
     # print(f"{header[0]:<12} | {header[1]:<80} | {header[2]:<5} | {header[3]:<4}")
     for course_code, course_name, grade, credit in zip(data[0], data[1], data[2], data[4]):
-        print(f"{course_code:<12} | {course_name:<80} | {grade:<5} | {credit:<4}")
+        # print(f"{course_code:<12} | {course_name:<80} | {grade:<5} | {credit:<4}")
         records_table[course_code] = [course_name, grade, credit]
 
     return records_table
 
-
+# def convert_to_png():
+#     images = convert_from_path("tor.pdf", fmt='png')
+#     return images
+# def process_img(images, records_table):
+#     for image in images:
+#         records_table = process(image, detect_columns(image), records_table)
+#
+#     return records_table
+#
+# images = convert_to_png()
+# records_table = dict()
+# records_table = process_img(images, records_table)
