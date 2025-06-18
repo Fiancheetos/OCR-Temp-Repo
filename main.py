@@ -5,7 +5,7 @@ from typing import List, Optional
 import uvicorn
 
 from pdf2image import convert_from_path
-import torReader
+import TORReader
 
 # Initialize the FastAPI application
 app = FastAPI(
