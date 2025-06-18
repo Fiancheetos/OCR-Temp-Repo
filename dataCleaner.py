@@ -1,11 +1,11 @@
 import re
-def cleanCol(col):
+def clean_columns(col):
     ignore_keywords = r'(?i)\b(note|remarks|prepared by|checked by|issued by|updated by|nothing follows|semester|trimester|credits|university|bachelor|college|enrollment|credit|grade)\b'
     lines = col.split('\n')
     cleaned = [line for line in lines if line != '' and not re.search(ignore_keywords, line)]
     return cleaned
 
-def match(data):
+def conjunct_name_overflow(data):
     allowed_one_word_names = {"Thesis"}
 
     while True:
@@ -20,7 +20,7 @@ def match(data):
                 invalidIndices.append(i)
 
         if not invalidIndices:
-            print("Mismatch remains but no mergeable entries found.")
+            print("Mismatch remains but no name overflow found.")
             break
 
         for j in reversed(invalidIndices):
