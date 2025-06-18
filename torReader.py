@@ -4,6 +4,7 @@ import numpy
 import dataCleaner
 import os
 from dotenv import load_dotenv
+import upgConverter
 
 load_dotenv()
 
@@ -42,7 +43,7 @@ def detect_columns(pil_image):
     columns = sorted(columns, key=lambda box: box[0][0])
     return columns
 
-def process(pil_image, cols, records_table):
+def process(pil_image, cols, records_table, config):
     image = cv2.cvtColor(numpy.array(pil_image), cv2.COLOR_RGB2BGR)
 
     data = []
@@ -71,7 +72,12 @@ def process(pil_image, cols, records_table):
     # print(f"{header[0]:<12} | {header[1]:<80} | {header[2]:<5} | {header[3]:<4}")
     for course_code, course_name, grade, credit in zip(data[0], data[1], data[2], data[4]):
         print(f"{course_code:<12} | {course_name:<80} | {grade:<5} | {credit:<4}")
-        records_table[course_code] = [course_name, grade, credit]
+        grade = upgConverter.converter(config, grade)
+        if course_code not in records_table:
+            records_table[course_code] = [course_name, grade, credit]  
+        else: 
+            temp = records_table[course_code]
+            records_table[course_code] = [temp, grade, credit]
 
     return records_table
 

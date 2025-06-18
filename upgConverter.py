@@ -79,17 +79,19 @@ hs_conversion_table = {
     "3": 3.0
 }
 
-
+# config = upg if already in upg
 def converter(config, grade):
-    if config == "PCU":
+    if config == "pcu":
         return pcu_conversion_table[grade.upper()]
-    elif config == "XU":
+    elif config == "xu":
         return xu_conversion_table[grade.upper()]
     elif config == "alpha-four":
         return alpha_four_conversion_table[grade.upper()]
-    elif config == "DLSU":
+    elif config == "dlsu":
         return dlsu_conversion_table[grade]
     elif config == "precise":
         return precise_conversion_table[grade]
-    elif config == "HS":
+    elif config == "hs":
         return hs_conversion_table[grade]
+    else:
+        return grade

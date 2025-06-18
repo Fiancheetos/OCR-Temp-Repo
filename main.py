@@ -4,6 +4,7 @@ import uvicorn
 
 from pdf2image import convert_from_path
 import torReader
+import upgComputation
 
 # Initialize the FastAPI application
 app = FastAPI(
@@ -22,23 +23,24 @@ async def convert_to_png():
     images = convert_from_path("tor.pdf", fmt='png')
     return images
 
-async def process_img(images, records_table):
+async def process_img(images, records_table, config):
     for image in images:
-        records_table = torReader.process(image, torReader.detect_columns(image), records_table)
+        records_table = torReader.process(image, torReader.detect_columns(image), records_table, config)
 
     return records_table
 
 # --- API Endpoints (Routes) ---
 
-@app.get("/api/")
-async def run_func(blob : Request):
+@app.get("/api/{config}")
+async def run_func(blob : Request, config: str):
     file : bytes = await blob.body()
     await receive_blob(file)
 
     images = await convert_to_png()
     records_table = dict()
-    await process_img(images, records_table)
-    return records_table
+    await process_img(images, records_table, config)
+    gwa = upgComputation.compute_gwa(records_table)
+    return {"table": records_table, "gwa": gwa}
 
 # --- Run the application ---
 # This block allows you to run the FastAPI application directly using `python main.py`.
