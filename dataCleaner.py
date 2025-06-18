@@ -1,4 +1,5 @@
 import re
+
 def clean_columns(col):
     ignore_keywords = r'(?i)\b(note|remarks|prepared by|checked by|issued by|updated by|nothing follows|semester|trimester|credits|university|bachelor|college|enrollment|credit|grade)\b'
     lines = col.split('\n')

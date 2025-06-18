@@ -1,13 +1,15 @@
 import cv2
 import pytesseract
-from pdf2image import convert_from_path
 import numpy
 import dataCleaner
+import os
+from dotenv import load_dotenv
 
-## pytesseract.pytesseract.tesseract_cmd = r'/opt/homebrew/bin/tesseract'
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+load_dotenv()
 
-def detectColumns(pil_image):
+pytesseract.pytesseract.tesseract_cmd = os.getenv("TESSERACT_LOCATION")
+
+def detect_columns(pil_image):
     image = cv2.cvtColor(numpy.array(pil_image), cv2.COLOR_RGB2BGR)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     _, binary = cv2.threshold(gray, 150, 255, cv2.THRESH_BINARY_INV)
@@ -72,22 +74,5 @@ def process(pil_image, cols, records_table):
         records_table[course_code] = [course_name, grade, credit]
 
     return records_table
-        
-def convert_to_png():
-    images = convert_from_path("tor.pdf", fmt='png')
-    return images
-
-def process_img(images, records_table):
-    for image in images:
-        records_table = process(image, detectColumns(image),records_table)
-
-    return records_table
-
-images = convert_to_png()
-records_table = dict()
-process_img(images, records_table)
-print("")
-print("Records Table: ")
-print(records_table)
 
 
